@@ -59,24 +59,15 @@ public class Telephony {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static final class TelephonyInfo {
-    private @Nullable String networkCountryIso;
+    /** The name of the user’s home cellular service provider. */
+    private @Nullable String displayName;
 
-    public @Nullable String getNetworkCountryIso() {
-      return networkCountryIso;
+    public @Nullable String getDisplayName() {
+      return displayName;
     }
 
-    public void setNetworkCountryIso(@Nullable String setterArg) {
-      this.networkCountryIso = setterArg;
-    }
-
-    private @Nullable String mobileCountryCode;
-
-    public @Nullable String getMobileCountryCode() {
-      return mobileCountryCode;
-    }
-
-    public void setMobileCountryCode(@Nullable String setterArg) {
-      this.mobileCountryCode = setterArg;
+    public void setDisplayName(@Nullable String setterArg) {
+      this.displayName = setterArg;
     }
 
     /** The mobile network code (MNC) for the user’s cellular service provider. */
@@ -90,70 +81,15 @@ public class Telephony {
       this.mobileNetworkCode = setterArg;
     }
 
-    /** The name of the user’s home cellular service provider. */
-    private @Nullable String displayName;
+    /** The mobile network generation: LTE, HSDPA, e.t.c */
+    private @Nullable String radioType;
 
-    public @Nullable String getDisplayName() {
-      return displayName;
+    public @Nullable String getRadioType() {
+      return radioType;
     }
 
-    public void setDisplayName(@Nullable String setterArg) {
-      this.displayName = setterArg;
-    }
-
-    /** Constant indicating the state of the device SIM card in a logical slot; SIM_STATE_UNKNOWN, SIM_STATE_ABSENT, SIM_STATE_PIN_REQUIRED, SIM_STATE_PUK_REQUIRED, SIM_STATE_NETWORK_LOCKED, SIM_STATE_READY, SIM_STATE_NOT_READY, SIM_STATE_PERM_DISABLED, SIM_STATE_CARD_IO_ERROR, SIM_STATE_CARD_RESTRICTED, */
-    private @Nullable String simState;
-
-    public @Nullable String getSimState() {
-      return simState;
-    }
-
-    public void setSimState(@Nullable String setterArg) {
-      this.simState = setterArg;
-    }
-
-    /** The ISO country code for the user’s cellular service provider. */
-    private @Nullable String isoCountryCode;
-
-    public @Nullable String getIsoCountryCode() {
-      return isoCountryCode;
-    }
-
-    public void setIsoCountryCode(@Nullable String setterArg) {
-      this.isoCountryCode = setterArg;
-    }
-
-    /** The cell id (cid) and local area code */
-    private @Nullable CellId cellId;
-
-    public @Nullable CellId getCellId() {
-      return cellId;
-    }
-
-    public void setCellId(@Nullable CellId setterArg) {
-      this.cellId = setterArg;
-    }
-
-    /** Phone number of the sim */
-    private @Nullable String phoneNumber;
-
-    public @Nullable String getPhoneNumber() {
-      return phoneNumber;
-    }
-
-    public void setPhoneNumber(@Nullable String setterArg) {
-      this.phoneNumber = setterArg;
-    }
-
-    /** Carrier name of the sim */
-    private @Nullable String carrierName;
-
-    public @Nullable String getCarrierName() {
-      return carrierName;
-    }
-
-    public void setCarrierName(@Nullable String setterArg) {
-      this.carrierName = setterArg;
+    public void setRadioType(@Nullable String setterArg) {
+      this.radioType = setterArg;
     }
 
     /** The mobile network radioType: 5G, 4G ... 2G */
@@ -167,30 +103,34 @@ public class Telephony {
       this.networkGeneration = setterArg;
     }
 
-    /** The mobile network generation: LTE, HSDPA, e.t.c */
-    private @Nullable String radioType;
+    /** The cell id (cid) and local area code */
+    private @Nullable String cellId;
 
-    public @Nullable String getRadioType() {
-      return radioType;
+    public @Nullable String getCellId() {
+      return cellId;
     }
 
-    public void setRadioType(@Nullable String setterArg) {
-      this.radioType = setterArg;
+    public void setCellId(@Nullable String setterArg) {
+      this.cellId = setterArg;
+    }
+
+    /** The cell signal strenght */
+    private @Nullable String cellSignalStrength;
+
+    public @Nullable String getCellSignalStrength() {
+      return cellSignalStrength;
+    }
+
+    public void setCellSignalStrength(@Nullable String setterArg) {
+      this.cellSignalStrength = setterArg;
     }
 
     public static final class Builder {
 
-      private @Nullable String networkCountryIso;
+      private @Nullable String displayName;
 
-      public @NonNull Builder setNetworkCountryIso(@Nullable String setterArg) {
-        this.networkCountryIso = setterArg;
-        return this;
-      }
-
-      private @Nullable String mobileCountryCode;
-
-      public @NonNull Builder setMobileCountryCode(@Nullable String setterArg) {
-        this.mobileCountryCode = setterArg;
+      public @NonNull Builder setDisplayName(@Nullable String setterArg) {
+        this.displayName = setterArg;
         return this;
       }
 
@@ -201,45 +141,10 @@ public class Telephony {
         return this;
       }
 
-      private @Nullable String displayName;
+      private @Nullable String radioType;
 
-      public @NonNull Builder setDisplayName(@Nullable String setterArg) {
-        this.displayName = setterArg;
-        return this;
-      }
-
-      private @Nullable String simState;
-
-      public @NonNull Builder setSimState(@Nullable String setterArg) {
-        this.simState = setterArg;
-        return this;
-      }
-
-      private @Nullable String isoCountryCode;
-
-      public @NonNull Builder setIsoCountryCode(@Nullable String setterArg) {
-        this.isoCountryCode = setterArg;
-        return this;
-      }
-
-      private @Nullable CellId cellId;
-
-      public @NonNull Builder setCellId(@Nullable CellId setterArg) {
-        this.cellId = setterArg;
-        return this;
-      }
-
-      private @Nullable String phoneNumber;
-
-      public @NonNull Builder setPhoneNumber(@Nullable String setterArg) {
-        this.phoneNumber = setterArg;
-        return this;
-      }
-
-      private @Nullable String carrierName;
-
-      public @NonNull Builder setCarrierName(@Nullable String setterArg) {
-        this.carrierName = setterArg;
+      public @NonNull Builder setRadioType(@Nullable String setterArg) {
+        this.radioType = setterArg;
         return this;
       }
 
@@ -250,135 +155,58 @@ public class Telephony {
         return this;
       }
 
-      private @Nullable String radioType;
+      private @Nullable String cellId;
 
-      public @NonNull Builder setRadioType(@Nullable String setterArg) {
-        this.radioType = setterArg;
+      public @NonNull Builder setCellId(@Nullable String setterArg) {
+        this.cellId = setterArg;
+        return this;
+      }
+
+      private @Nullable String cellSignalStrength;
+
+      public @NonNull Builder setCellSignalStrength(@Nullable String setterArg) {
+        this.cellSignalStrength = setterArg;
         return this;
       }
 
       public @NonNull TelephonyInfo build() {
         TelephonyInfo pigeonReturn = new TelephonyInfo();
-        pigeonReturn.setNetworkCountryIso(networkCountryIso);
-        pigeonReturn.setMobileCountryCode(mobileCountryCode);
-        pigeonReturn.setMobileNetworkCode(mobileNetworkCode);
         pigeonReturn.setDisplayName(displayName);
-        pigeonReturn.setSimState(simState);
-        pigeonReturn.setIsoCountryCode(isoCountryCode);
-        pigeonReturn.setCellId(cellId);
-        pigeonReturn.setPhoneNumber(phoneNumber);
-        pigeonReturn.setCarrierName(carrierName);
-        pigeonReturn.setNetworkGeneration(networkGeneration);
+        pigeonReturn.setMobileNetworkCode(mobileNetworkCode);
         pigeonReturn.setRadioType(radioType);
+        pigeonReturn.setNetworkGeneration(networkGeneration);
+        pigeonReturn.setCellId(cellId);
+        pigeonReturn.setCellSignalStrength(cellSignalStrength);
         return pigeonReturn;
       }
     }
 
     @NonNull
     ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(11);
-      toListResult.add(networkCountryIso);
-      toListResult.add(mobileCountryCode);
-      toListResult.add(mobileNetworkCode);
+      ArrayList<Object> toListResult = new ArrayList<Object>(6);
       toListResult.add(displayName);
-      toListResult.add(simState);
-      toListResult.add(isoCountryCode);
-      toListResult.add((cellId == null) ? null : cellId.toList());
-      toListResult.add(phoneNumber);
-      toListResult.add(carrierName);
-      toListResult.add(networkGeneration);
+      toListResult.add(mobileNetworkCode);
       toListResult.add(radioType);
+      toListResult.add(networkGeneration);
+      toListResult.add(cellId);
+      toListResult.add(cellSignalStrength);
       return toListResult;
     }
 
     static @NonNull TelephonyInfo fromList(@NonNull ArrayList<Object> list) {
       TelephonyInfo pigeonResult = new TelephonyInfo();
-      Object networkCountryIso = list.get(0);
-      pigeonResult.setNetworkCountryIso((String) networkCountryIso);
-      Object mobileCountryCode = list.get(1);
-      pigeonResult.setMobileCountryCode((String) mobileCountryCode);
-      Object mobileNetworkCode = list.get(2);
-      pigeonResult.setMobileNetworkCode((String) mobileNetworkCode);
-      Object displayName = list.get(3);
+      Object displayName = list.get(0);
       pigeonResult.setDisplayName((String) displayName);
-      Object simState = list.get(4);
-      pigeonResult.setSimState((String) simState);
-      Object isoCountryCode = list.get(5);
-      pigeonResult.setIsoCountryCode((String) isoCountryCode);
-      Object cellId = list.get(6);
-      pigeonResult.setCellId((cellId == null) ? null : CellId.fromList((ArrayList<Object>) cellId));
-      Object phoneNumber = list.get(7);
-      pigeonResult.setPhoneNumber((String) phoneNumber);
-      Object carrierName = list.get(8);
-      pigeonResult.setCarrierName((String) carrierName);
-      Object networkGeneration = list.get(9);
-      pigeonResult.setNetworkGeneration((String) networkGeneration);
-      Object radioType = list.get(10);
+      Object mobileNetworkCode = list.get(1);
+      pigeonResult.setMobileNetworkCode((String) mobileNetworkCode);
+      Object radioType = list.get(2);
       pigeonResult.setRadioType((String) radioType);
-      return pigeonResult;
-    }
-  }
-
-  /** Generated class from Pigeon that represents data sent in messages. */
-  public static final class CellId {
-    private @Nullable Long cid;
-
-    public @Nullable Long getCid() {
-      return cid;
-    }
-
-    public void setCid(@Nullable Long setterArg) {
-      this.cid = setterArg;
-    }
-
-    private @Nullable Long lac;
-
-    public @Nullable Long getLac() {
-      return lac;
-    }
-
-    public void setLac(@Nullable Long setterArg) {
-      this.lac = setterArg;
-    }
-
-    public static final class Builder {
-
-      private @Nullable Long cid;
-
-      public @NonNull Builder setCid(@Nullable Long setterArg) {
-        this.cid = setterArg;
-        return this;
-      }
-
-      private @Nullable Long lac;
-
-      public @NonNull Builder setLac(@Nullable Long setterArg) {
-        this.lac = setterArg;
-        return this;
-      }
-
-      public @NonNull CellId build() {
-        CellId pigeonReturn = new CellId();
-        pigeonReturn.setCid(cid);
-        pigeonReturn.setLac(lac);
-        return pigeonReturn;
-      }
-    }
-
-    @NonNull
-    ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(2);
-      toListResult.add(cid);
-      toListResult.add(lac);
-      return toListResult;
-    }
-
-    static @NonNull CellId fromList(@NonNull ArrayList<Object> list) {
-      CellId pigeonResult = new CellId();
-      Object cid = list.get(0);
-      pigeonResult.setCid((cid == null) ? null : ((cid instanceof Integer) ? (Integer) cid : (Long) cid));
-      Object lac = list.get(1);
-      pigeonResult.setLac((lac == null) ? null : ((lac instanceof Integer) ? (Integer) lac : (Long) lac));
+      Object networkGeneration = list.get(3);
+      pigeonResult.setNetworkGeneration((String) networkGeneration);
+      Object cellId = list.get(4);
+      pigeonResult.setCellId((String) cellId);
+      Object cellSignalStrength = list.get(5);
+      pigeonResult.setCellSignalStrength((String) cellSignalStrength);
       return pigeonResult;
     }
   }
@@ -392,8 +220,6 @@ public class Telephony {
     protected Object readValueOfType(byte type, @NonNull ByteBuffer buffer) {
       switch (type) {
         case (byte) 128:
-          return CellId.fromList((ArrayList<Object>) readValue(buffer));
-        case (byte) 129:
           return TelephonyInfo.fromList((ArrayList<Object>) readValue(buffer));
         default:
           return super.readValueOfType(type, buffer);
@@ -402,11 +228,8 @@ public class Telephony {
 
     @Override
     protected void writeValue(@NonNull ByteArrayOutputStream stream, Object value) {
-      if (value instanceof CellId) {
+      if (value instanceof TelephonyInfo) {
         stream.write(128);
-        writeValue(stream, ((CellId) value).toList());
-      } else if (value instanceof TelephonyInfo) {
-        stream.write(129);
         writeValue(stream, ((TelephonyInfo) value).toList());
       } else {
         super.writeValue(stream, value);

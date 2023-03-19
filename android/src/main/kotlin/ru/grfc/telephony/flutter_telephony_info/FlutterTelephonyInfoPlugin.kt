@@ -1,22 +1,16 @@
 package ru.grfc.telephony.flutter_telephony_info
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.content.Context
-import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.embedding.engine.plugins.activity.ActivityAware
-import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-
+import android.os.Build
 import android.telephony.TelephonyManager
-import android.telephony.cdma.CdmaCellLocation
-import android.telephony.gsm.GsmCellLocation
+import androidx.annotation.RequiresApi
+import io.flutter.embedding.engine.plugins.FlutterPlugin
 
 /** PigeonPlugin */
-class FlutterTelephonyInfoPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Telephony.TelephonyAPI {
-    private lateinit var channel: MethodChannel
-
+class FlutterTelephonyInfoPlugin : FlutterPlugin, Telephony.TelephonyAPI {
     private lateinit var context: Context
-    private lateinit var activity: Activity
+    private lateinit var mTelephonyManager: TelephonyManager
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         Telephony.TelephonyAPI.setup(flutterPluginBinding.binaryMessenger, this)
@@ -27,40 +21,83 @@ class FlutterTelephonyInfoPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
         Telephony.TelephonyAPI.setup(binding.binaryMessenger, null)
     }
 
+    @SuppressLint("MissingPermission")
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun getInfo(): List<Telephony.TelephonyInfo> {
-        var mTelephonyManager: TelephonyManager? = null
-
         mTelephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
 
-        val telephonyList: List<Telephony.TelephonyInfo>
+        val telephonyList: MutableList<Telephony.TelephonyInfo> = mutableListOf()
 
-        val t1 = Telephony.TelephonyInfo()
-        val t2 = Telephony.TelephonyInfo()
-        t1.networkCountryIso = "1234"
-        t2.networkCountryIso = "5678"
-        result = listOf(t1, t2)
-
-//        val telephonyList: ArrayList<HashMap<String, Any?>> = ArrayList()
-        for (i in 0 until mTelephonyManager!!.phoneCount) {
-            val data = hashMapOf<String, Any?>(
-                "carrierName" to mTelephonyManager!!.simOperatorName,
-                "dataActivity" to mTelephonyManager!!.dataActivity,
-                "radioType" to if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) radioType() else null,
-                "cellId" to cellId(),
-                "simState" to simState(i),
-                "phoneNumber" to mTelephonyManager!!.line1Number,
-                "networkOperatorName" to mTelephonyManager!!.networkOperatorName,
-                "subscriptionId" to mTelephonyManager!!.subscriptionId,
-                "isoCountryCode" to mTelephonyManager!!.simCountryIso,
-                "networkCountryIso" to mTelephonyManager!!.getNetworkCountryIso(i),
-                "mobileNetworkCode" to mTelephonyManager!!.simOperator?.substring(3),
-                "displayName" to mTelephonyManager!!.simOperatorName,
-                "mobileCountryCode" to mTelephonyManager!!.simOperator?.substring(0, 3),
-                "networkGeneration" to if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) networkGeneration() else null,
-            )
-
-            telephonyList.add(data)
+        for (i in 0 until mTelephonyManager.activeModemCount) {
+            val telephonyInfo = Telephony.TelephonyInfo()
+            telephonyInfo.displayName = mTelephonyManager.simOperatorName
+            telephonyInfo.mobileNetworkCode = mTelephonyManager.simOperator
+            telephonyInfo.radioType = radioType()
+            telephonyInfo.networkGeneration = networkGeneration()
+            telephonyInfo.cellId = mTelephonyManager.allCellInfo[i].cellIdentity.toString()
+            telephonyInfo.cellSignalStrength =
+                mTelephonyManager.allCellInfo[i].cellSignalStrength.toString()
+            telephonyList += telephonyInfo
         }
-        return result
+        return telephonyList
+    }
+
+    @SuppressLint("MissingPermission")
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun radioType(): String {
+        return when (mTelephonyManager.dataNetworkType) {
+            TelephonyManager.NETWORK_TYPE_1xRTT -> return "1xRTT"
+            TelephonyManager.NETWORK_TYPE_CDMA -> return "CDMA"
+            TelephonyManager.NETWORK_TYPE_EDGE -> return "EDGE"
+            TelephonyManager.NETWORK_TYPE_EHRPD -> return "eHRPD"
+            TelephonyManager.NETWORK_TYPE_EVDO_0 -> return "EVDO rev. 0"
+            TelephonyManager.NETWORK_TYPE_EVDO_A -> return "EVDO rev. A"
+            TelephonyManager.NETWORK_TYPE_EVDO_B -> return "EVDO rev. B"
+            TelephonyManager.NETWORK_TYPE_GPRS -> return "GPRS"
+            TelephonyManager.NETWORK_TYPE_GSM -> return "GSM"
+            TelephonyManager.NETWORK_TYPE_HSDPA -> return "HSDPA"
+            TelephonyManager.NETWORK_TYPE_HSPA -> return "HSPA"
+            TelephonyManager.NETWORK_TYPE_HSPAP -> return "HSPA+"
+            TelephonyManager.NETWORK_TYPE_HSUPA -> return "HSUPA"
+            TelephonyManager.NETWORK_TYPE_IDEN -> return "iDen"
+            TelephonyManager.NETWORK_TYPE_UMTS -> return "UMTS"
+            TelephonyManager.NETWORK_TYPE_LTE -> return "LTE"
+            TelephonyManager.NETWORK_TYPE_NR -> return "NR"
+            TelephonyManager.NETWORK_TYPE_TD_SCDMA -> return "TD SCDMA"
+            TelephonyManager.NETWORK_TYPE_IWLAN -> return "IWLAN"
+            TelephonyManager.NETWORK_TYPE_UNKNOWN -> return "Unknown"
+            else -> ""
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    @SuppressLint("MissingPermission")
+    private fun networkGeneration(): String {
+        when (val radioType = mTelephonyManager.dataNetworkType) {
+            TelephonyManager.NETWORK_TYPE_GPRS,
+            TelephonyManager.NETWORK_TYPE_EDGE,
+            TelephonyManager.NETWORK_TYPE_CDMA,
+            TelephonyManager.NETWORK_TYPE_1xRTT,
+            TelephonyManager.NETWORK_TYPE_IDEN,
+            TelephonyManager.NETWORK_TYPE_GSM
+            -> return "2G"
+            TelephonyManager.NETWORK_TYPE_UMTS,
+            TelephonyManager.NETWORK_TYPE_EVDO_0,
+            TelephonyManager.NETWORK_TYPE_EVDO_A,
+            TelephonyManager.NETWORK_TYPE_HSDPA,
+            TelephonyManager.NETWORK_TYPE_HSUPA,
+            TelephonyManager.NETWORK_TYPE_HSPA,
+            TelephonyManager.NETWORK_TYPE_EVDO_B,
+            TelephonyManager.NETWORK_TYPE_EHRPD,
+            TelephonyManager.NETWORK_TYPE_HSPAP,
+            TelephonyManager.NETWORK_TYPE_TD_SCDMA
+            -> return "3G"
+            TelephonyManager.NETWORK_TYPE_LTE
+            -> return "4G"
+            TelephonyManager.NETWORK_TYPE_NR,
+            -> return "5G"
+            else -> radioType.toString()
+        }
+        return "unknown"
     }
 }

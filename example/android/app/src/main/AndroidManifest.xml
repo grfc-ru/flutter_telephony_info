@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.grfc.telephony.flutter_telephony_info_example">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
         android:label="flutter_telephony_info_example"
         android:name="${applicationName}"

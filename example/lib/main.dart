@@ -3,8 +3,18 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_telephony_info/pigeon_telephony.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await [
+    Permission.phone,
+    Permission.location,
+    Permission.locationAlways,
+    Permission.locationWhenInUse
+  ].request();
+
   runApp(const MyApp());
 }
 
@@ -54,7 +64,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: ${_platformVersion?.first?.networkCountryIso}\n'),
+          child: Text('Running on: ${_platformVersion?.first?.displayName}\n'),
         ),
       ),
     );

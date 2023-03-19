@@ -10,108 +10,52 @@ import 'package:flutter/services.dart';
 
 class TelephonyInfo {
   TelephonyInfo({
-    this.networkCountryIso,
-    this.mobileCountryCode,
-    this.mobileNetworkCode,
     this.displayName,
-    this.simState,
-    this.isoCountryCode,
-    this.cellId,
-    this.phoneNumber,
-    this.carrierName,
-    this.networkGeneration,
+    this.mobileNetworkCode,
     this.radioType,
+    this.networkGeneration,
+    this.cellId,
+    this.cellSignalStrength,
   });
-
-  String? networkCountryIso;
-
-  String? mobileCountryCode;
-
-  /// The mobile network code (MNC) for the user’s cellular service provider.
-  String? mobileNetworkCode;
 
   /// The name of the user’s home cellular service provider.
   String? displayName;
 
-  /// Constant indicating the state of the device SIM card in a logical slot; SIM_STATE_UNKNOWN, SIM_STATE_ABSENT, SIM_STATE_PIN_REQUIRED, SIM_STATE_PUK_REQUIRED, SIM_STATE_NETWORK_LOCKED, SIM_STATE_READY, SIM_STATE_NOT_READY, SIM_STATE_PERM_DISABLED, SIM_STATE_CARD_IO_ERROR, SIM_STATE_CARD_RESTRICTED,
-  String? simState;
-
-  /// The ISO country code for the user’s cellular service provider.
-  String? isoCountryCode;
-
-  /// The cell id (cid) and local area code
-  CellId? cellId;
-
-  /// Phone number of the sim
-  String? phoneNumber;
-
-  /// Carrier name of the sim
-  String? carrierName;
-
-  /// The mobile network radioType: 5G, 4G ... 2G
-  String? networkGeneration;
+  /// The mobile network code (MNC) for the user’s cellular service provider.
+  String? mobileNetworkCode;
 
   /// The mobile network generation: LTE, HSDPA, e.t.c
   String? radioType;
 
+  /// The mobile network radioType: 5G, 4G ... 2G
+  String? networkGeneration;
+
+  /// The cell id (cid) and local area code
+  String? cellId;
+
+  /// The cell signal strenght
+  String? cellSignalStrength;
+
   Object encode() {
     return <Object?>[
-      networkCountryIso,
-      mobileCountryCode,
-      mobileNetworkCode,
       displayName,
-      simState,
-      isoCountryCode,
-      cellId?.encode(),
-      phoneNumber,
-      carrierName,
-      networkGeneration,
+      mobileNetworkCode,
       radioType,
+      networkGeneration,
+      cellId,
+      cellSignalStrength,
     ];
   }
 
   static TelephonyInfo decode(Object result) {
     result as List<Object?>;
     return TelephonyInfo(
-      networkCountryIso: result[0] as String?,
-      mobileCountryCode: result[1] as String?,
-      mobileNetworkCode: result[2] as String?,
-      displayName: result[3] as String?,
-      simState: result[4] as String?,
-      isoCountryCode: result[5] as String?,
-      cellId: result[6] != null
-          ? CellId.decode(result[6]! as List<Object?>)
-          : null,
-      phoneNumber: result[7] as String?,
-      carrierName: result[8] as String?,
-      networkGeneration: result[9] as String?,
-      radioType: result[10] as String?,
-    );
-  }
-}
-
-class CellId {
-  CellId({
-    this.cid,
-    this.lac,
-  });
-
-  int? cid;
-
-  int? lac;
-
-  Object encode() {
-    return <Object?>[
-      cid,
-      lac,
-    ];
-  }
-
-  static CellId decode(Object result) {
-    result as List<Object?>;
-    return CellId(
-      cid: result[0] as int?,
-      lac: result[1] as int?,
+      displayName: result[0] as String?,
+      mobileNetworkCode: result[1] as String?,
+      radioType: result[2] as String?,
+      networkGeneration: result[3] as String?,
+      cellId: result[4] as String?,
+      cellSignalStrength: result[5] as String?,
     );
   }
 }
@@ -120,11 +64,8 @@ class _TelephonyAPICodec extends StandardMessageCodec {
   const _TelephonyAPICodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is CellId) {
+    if (value is TelephonyInfo) {
       buffer.putUint8(128);
-      writeValue(buffer, value.encode());
-    } else if (value is TelephonyInfo) {
-      buffer.putUint8(129);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -135,8 +76,6 @@ class _TelephonyAPICodec extends StandardMessageCodec {
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
       case 128: 
-        return CellId.decode(readValue(buffer)!);
-      case 129: 
         return TelephonyInfo.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
