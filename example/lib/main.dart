@@ -8,12 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await [
-    Permission.phone,
-    Permission.location,
-    Permission.locationAlways,
-    Permission.locationWhenInUse
-  ].request();
+  await [Permission.phone, Permission.locationWhenInUse].request();
 
   runApp(const MyApp());
 }
@@ -26,7 +21,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<TelephonyInfo?>? _platformVersion;
+  List<TelephonyInfo?>? _telephonyInfo;
   final _flutterTelephonyInfoPlugin = TelephonyAPI();
 
   @override
@@ -37,13 +32,13 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    List<TelephonyInfo?>? platformVersion;
+    List<TelephonyInfo?>? telephonyInfo;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion = await _flutterTelephonyInfoPlugin.getInfo();
+      telephonyInfo = await _flutterTelephonyInfoPlugin.getInfo();
     } on PlatformException {
-      platformVersion = null;
+      telephonyInfo = null;
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -52,7 +47,7 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = platformVersion;
+      _telephonyInfo = telephonyInfo;
     });
   }
 
@@ -64,7 +59,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: ${_platformVersion?.first?.displayName}\n'),
+          child: Text('SIM operator: ${_telephonyInfo?.first?.displayName}\n'),
         ),
       ),
     );

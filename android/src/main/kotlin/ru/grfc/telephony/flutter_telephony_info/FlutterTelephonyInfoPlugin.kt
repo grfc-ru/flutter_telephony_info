@@ -34,9 +34,14 @@ class FlutterTelephonyInfoPlugin : FlutterPlugin, Telephony.TelephonyAPI {
             telephonyInfo.mobileNetworkCode = mTelephonyManager.simOperator
             telephonyInfo.radioType = radioType()
             telephonyInfo.networkGeneration = networkGeneration()
-            telephonyInfo.cellId = mTelephonyManager.allCellInfo[i].cellIdentity.toString()
-            telephonyInfo.cellSignalStrength =
-                mTelephonyManager.allCellInfo[i].cellSignalStrength.toString()
+            if (mTelephonyManager.allCellInfo.isEmpty()) {
+                telephonyInfo.cellId = "Error! GPS must be turned on."
+                telephonyInfo.cellSignalStrength = "Error! GPS must be turned on."
+            } else {
+                telephonyInfo.cellId = mTelephonyManager.allCellInfo[i].cellIdentity.toString()
+                telephonyInfo.cellSignalStrength =
+                    mTelephonyManager.allCellInfo[i].cellSignalStrength.toString()
+            }
             telephonyList += telephonyInfo
         }
         return telephonyList
