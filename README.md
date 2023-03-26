@@ -36,6 +36,22 @@ The following Android permissions are required for the plugin to work
 ```
 Don't forget to turn on GPS
 
+## Usage
+
+```dart
+  import 'package:flutter_telephony_info/flutter_telephony_info.dart';
+
+  final _flutterTelephonyInfoPlugin = TelephonyAPI();
+  List<TelephonyInfo?>? telephonyInfo;
+  try {
+      telephonyInfo = await _flutterTelephonyInfoPlugin.getInfo();
+    } on PlatformException {
+      telephonyInfo = null;
+    }
+
+  telephonyInfo?.first?.displayName
+```
+
 ## Changelog  
   
 Refer to the [Changelog](https://github.com/grfc-ru/flutter_telephony_info/blob/main/CHANGELOG.md) to get all release notes.  

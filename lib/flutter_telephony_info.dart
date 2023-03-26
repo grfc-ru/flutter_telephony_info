@@ -75,7 +75,7 @@ class _TelephonyAPICodec extends StandardMessageCodec {
   @override
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
-      case 128: 
+      case 128:
         return TelephonyInfo.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -97,8 +97,7 @@ class TelephonyAPI {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.TelephonyAPI.getInfo', codec,
         binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList =
-        await channel.send(null) as List<Object?>?;
+    final List<Object?>? replyList = await channel.send(null) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
