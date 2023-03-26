@@ -1,5 +1,9 @@
 # Flutter telephony plugin
-
+[![Pub](https://img.shields.io/pub/v/l.svg)](https://pub.dev/packages/flutter_telephony_info)
+![Pub Version](https://img.shields.io/pub/v/flutter_telephony_info)
+![Pub Points](https://img.shields.io/pub/points/flutter_telephony_info)
+[![License: WTFPL](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](https://en.wikipedia.org/wiki/WTFPL)
+[![Linter](https://img.shields.io/badge/style-linter-40c4ff.svg)](https://pub.dev/packages/linter)
 ## A minimal platform plugin that works through the 'Pigeon' code generator to interact with an Android device in order to retrieve information from the 'Telephony' module of the Android platform.
 
 Flutter telephony plugin gets:
