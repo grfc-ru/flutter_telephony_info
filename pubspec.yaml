@@ -1,13 +1,13 @@
 name: flutter_telephony_info
 description: A plugin to retrieve information from the android telephony library.
-version: 0.0.1
+version: 0.0.1-dev
 homepage: https://github.com/grfc-ru/flutter_telephony_info
 repository: https://github.com/grfc-ru/flutter_telephony_info/tree/main
 issue_tracker: https://github.com/grfc-ru/flutter_telephony_info/issues
 
 environment:
   sdk: '>=3.0.0-339.0.dev <4.0.0'
-  flutter: ^3.7.0
+  flutter: '>=3.7.0'
 
 platforms:
   android:

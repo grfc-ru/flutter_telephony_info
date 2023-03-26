@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:flutter_telephony_info/pigeon_telephony.dart';
+import 'package:flutter_telephony_info/flutter_telephony_info.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
