@@ -1,1 +1,1 @@
-dart run pigeon --input pigeons/telephony.dart --dart_out lib/flutter_telephony_info.dart --java_out ./android/src/main/java/ru/grfc/telephony/flutter_telephony_info/Telephony.java --java_package "ru.grfc.telephony.flutter_telephony_info"
+dart run pigeon --input pigeons/telephony.dart

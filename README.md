@@ -5,7 +5,9 @@
 [![License: WTFPL](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](https://en.wikipedia.org/wiki/WTFPL)
 [![Linter](https://img.shields.io/badge/style-linter-40c4ff.svg)](https://pub.dev/packages/linter)
 ## A minimal platform plugin that works through the 'Pigeon' code generator to interact with an Android device in order to retrieve information from the 'Telephony' module of the Android platform.
-
+---
+### **Attention! This plugin works with Android version 12 and higher!**
+---
 Flutter telephony plugin gets:
  - name cellular service provider;
  - mobile network code (MNC);
@@ -38,8 +40,9 @@ The following Android permissions are required for the plugin to work
 <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 ```
-Don't forget to turn on GPS
-
+---
+### **Don't forget to turn on GPS**
+---
 ## Usage
 
 ```dart
